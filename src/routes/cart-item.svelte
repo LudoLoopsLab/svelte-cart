@@ -6,7 +6,7 @@
 
 	type Props = {
 		cartProduct: CartProduct;
-		removeItem: (id: string) => void;
+		removeItem: (id: number) => void;
 	};
 
 	let { cartProduct = $bindable(), removeItem }: Props = $props();
@@ -28,7 +28,8 @@
 		<button
 			onclick={() => {
 				if (cartProduct.quantity === 1) {
-					removeItem(cartProduct.id);
+					// removeItem(cartProduct.id);
+					return;
 				} else {
 					cartProduct.quantity--;
 				}

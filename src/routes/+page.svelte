@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CartProduct } from '$lib/types';
+	import type { CartProduct, Product } from '$lib/types';
 	import CartItem from './cart-item.svelte';
 	import ShoppingCart from 'phosphor-svelte/lib/ShoppingCart';
 	import X from 'phosphor-svelte/lib/X';
@@ -34,7 +34,24 @@
 		}
 	});
 
-	function removeFromCart(id: string) {
+	const addToCart = (product: Product) => {
+		const { id } = product;
+
+		const item = cartProducts.find((product) => id === product.id);
+
+		if (item) {
+			item.quantity++;
+			return;
+		} else {
+			cartProducts.push({
+				id: product.id,
+				quantity: 1,
+				product: product
+			});
+		}
+	};
+
+	function removeFromCart(id: number) {
 		cartProducts = cartProducts.filter((product) => product.id !== id);
 	}
 </script>
@@ -85,11 +102,8 @@
 					<button
 						class="rounded-full bg-sky-600 px-4 py-2 text-white transition-colors duration-300 hover:bg-sky-700"
 						onclick={() => {
-							cartProducts.push({
-								id: crypto.randomUUID(),
-								quantity: 1,
-								product: product
-							});
+							addToCart(product);
+							cartOpen = true;
 						}}
 					>
 						Add to cart

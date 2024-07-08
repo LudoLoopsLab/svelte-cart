@@ -24,10 +24,10 @@ export type Product = {
 };
 
 export type CartProduct = {
-	id: string
+	id: number;
 	product: Product;
 	quantity: number;
-}
+};
 
 export type Dimensions = {
 	width: number;
